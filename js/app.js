@@ -64,6 +64,11 @@ var Server = (function (_super) {
             (this.props.onMove) && this.props.onMove(position.calculated_x, position.calculated_y);
         }
     };
+    Server.prototype.onMouseLeave = function () {
+        this.setState({
+            isFirstClick: true
+        });
+    };
     Server.prototype.onMouseUp = function () {
         this.setState({
             isFirstClick: true
@@ -75,7 +80,7 @@ var Server = (function (_super) {
             transform: "translate(" + x + "px," + y + "px)"
         };
         var highlight = (this.state.isFirstClick) ? '' : 'highlight';
-        return React.createElement("img", { className: highlight, style: style, src: "server.png", draggable: false, onDragStart: function () { return false; }, onMouseDown: this.onMouseDown.bind(this), onMouseMove: this.onMouseMove.bind(this), onMouseUp: this.onMouseUp.bind(this) });
+        return React.createElement("img", { className: highlight, style: style, src: "server.png", draggable: false, onDragStart: function () { return false; }, onMouseDown: this.onMouseDown.bind(this), onMouseMove: this.onMouseMove.bind(this), onMouseLeave: this.onMouseLeave.bind(this), onMouseUp: this.onMouseUp.bind(this) });
     };
     return Server;
 }(React.Component));

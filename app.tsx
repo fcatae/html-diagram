@@ -82,10 +82,17 @@ class Server extends React.Component<ServerProps,ServerStates> {
         }
     }
 
+    onMouseLeave() {
+        this.setState({
+            isFirstClick: true
+        });
+    }
+
     onMouseUp() {
         this.setState({
             isFirstClick: true
         });
+
     }
 
     render() {
@@ -99,6 +106,7 @@ class Server extends React.Component<ServerProps,ServerStates> {
                     draggable={false} onDragStart={()=>false}
                     onMouseDown={this.onMouseDown.bind(this)}
                     onMouseMove={this.onMouseMove.bind(this)}
+                    onMouseLeave={this.onMouseLeave.bind(this)}
                     onMouseUp={this.onMouseUp.bind(this)}
                     />;
     }
