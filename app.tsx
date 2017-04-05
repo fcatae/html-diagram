@@ -22,7 +22,7 @@ class App extends React.Component<{},AppStates> {
 
     render() {
         return <div>
-                    <svg height="210" width="500">
+                    <svg height="95%" width="95%">
                         <Line x={this.state.x} y={this.state.y} />      
                     </svg>
                     <Server onMove={this.onMove.bind(this)}/>

@@ -26,7 +26,7 @@ var App = (function (_super) {
     };
     App.prototype.render = function () {
         return React.createElement("div", null,
-            React.createElement("svg", { height: "210", width: "500" },
+            React.createElement("svg", { height: "95%", width: "95%" },
                 React.createElement(Line, { x: this.state.x, y: this.state.y })),
             React.createElement(Server, { onMove: this.onMove.bind(this) }));
     };
