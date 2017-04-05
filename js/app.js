@@ -18,5 +18,16 @@ var App = (function (_super) {
     };
     return App;
 }(React.Component));
+var Server = (function (_super) {
+    __extends(Server, _super);
+    function Server() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Server.prototype.render = function () {
+        return React.createElement("img", { src: "server.png" });
+    };
+    return Server;
+}(React.Component));
 ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
+ReactDOM.render(React.createElement(Server, null), document.getElementById('srv'));
 //# sourceMappingURL=app.js.map
