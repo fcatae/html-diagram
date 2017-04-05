@@ -10,12 +10,25 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var App = (function (_super) {
     __extends(App, _super);
-    function App() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function App(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            x: 0,
+            y: 0
+        };
+        return _this;
     }
+    App.prototype.onMove = function (x, y) {
+        this.setState({
+            x: x,
+            y: y
+        });
+    };
     App.prototype.render = function () {
-        return React.createElement("svg", { height: "210", width: "500" },
-            React.createElement(Line, null));
+        return React.createElement("div", null,
+            React.createElement("svg", { height: "210", width: "500" },
+                React.createElement(Line, { x: this.state.x, y: this.state.y })),
+            React.createElement(Server, { onMove: this.onMove.bind(this) }));
     };
     return App;
 }(React.Component));
@@ -43,10 +56,12 @@ var Server = (function (_super) {
     };
     Server.prototype.onMouseMove = function (ev) {
         if (this.state.isFirstClick == false) {
-            this.setState({
+            var position = {
                 calculated_x: ev.screenX - this.state.ini_x,
                 calculated_y: ev.screenY - this.state.ini_y
-            });
+            };
+            this.setState(position);
+            (this.props.onMove) && this.props.onMove(position.calculated_x, position.calculated_y);
         }
     };
     Server.prototype.onMouseUp = function () {
@@ -70,7 +85,7 @@ var Line = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     Line.prototype.render = function () {
-        return React.createElement("line", { x1: "0", y1: "0", x2: "200", y2: "200", style: { stroke: 'rgb(255,0,0)', strokeWidth: 2 } });
+        return React.createElement("line", { x1: "0", y1: "0", x2: this.props.x, y2: this.props.y, style: { stroke: 'rgb(255,0,0)', strokeWidth: 2 } });
     };
     return Line;
 }(React.Component));
@@ -102,6 +117,4 @@ var TrackMouse = (function (_super) {
     return TrackMouse;
 }(React.Component));
 ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
-ReactDOM.render(React.createElement(Server, null), document.getElementById('srv'));
-ReactDOM.render(React.createElement(TrackMouse, null), document.getElementById('status'));
 //# sourceMappingURL=app.js.map

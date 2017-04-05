@@ -1,8 +1,32 @@
-class App extends React.Component<{},{}> {
+
+interface AppStates {
+    x: number,
+    y: number
+}
+
+class App extends React.Component<{},AppStates> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            x: 0,
+            y: 0
+        }
+    }
+
+    onMove(x: number, y:number) {
+        this.setState({
+            x: x,
+            y: y
+        })
+    }
+
     render() {
-        return <svg height="210" width="500">
-                    <Line/>      
-                </svg>;
+        return <div>
+                    <svg height="210" width="500">
+                        <Line x={this.state.x} y={this.state.y} />      
+                    </svg>
+                    <Server onMove={this.onMove.bind(this)}/>
+                </div>;
 
     }
 }
@@ -15,7 +39,11 @@ interface ServerStates {
     isFirstClick: boolean
 }
 
-class Server extends React.Component<{},ServerStates> {
+interface ServerProps {
+    onMove?: (x:number,y:number) => void;
+}
+
+class Server extends React.Component<ServerProps,ServerStates> {
     constructor(props) {
         super(props);
         this.state = {
@@ -42,10 +70,15 @@ class Server extends React.Component<{},ServerStates> {
     onMouseMove(ev: React.MouseEvent<HTMLDivElement>) {
 
         if( this.state.isFirstClick == false ) {
-               this.setState({
-                calculated_x: ev.screenX - this.state.ini_x,
-                calculated_y: ev.screenY - this.state.ini_y
-            });         
+               
+               let position = {
+                    calculated_x: ev.screenX - this.state.ini_x,
+                    calculated_y: ev.screenY - this.state.ini_y
+                    };
+
+               this.setState(position);
+            
+            (this.props.onMove) && this.props.onMove(position.calculated_x, position.calculated_y);
         }
     }
 
@@ -71,9 +104,13 @@ class Server extends React.Component<{},ServerStates> {
     }
 }
 
-class Line extends React.Component<{},{}> {
+interface LineProps {
+    x: number,
+    y: number
+}
+class Line extends React.Component<LineProps,{}> {
     render() {
-        return <line x1="0" y1="0" x2="200" y2="200" style={ {stroke:'rgb(255,0,0)',strokeWidth: 2} } />;
+        return <line x1="0" y1="0" x2={this.props.x} y2={this.props.y} style={ {stroke:'rgb(255,0,0)',strokeWidth: 2} } />;
     }
 }
 
@@ -110,7 +147,3 @@ class TrackMouse extends React.Component<{},TrackMouseStates> {
 }   
 
 ReactDOM.render(<App/>, document.getElementById('app'));
-
-ReactDOM.render(<Server/>, document.getElementById('srv'));
-
-ReactDOM.render(<TrackMouse/>, document.getElementById('status'));
