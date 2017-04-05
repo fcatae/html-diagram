@@ -7,9 +7,67 @@ class App extends React.Component<{},{}> {
     }
 }
 
-class Server extends React.Component<{},{}> {
+interface ServerStates {
+    ini_x: number,
+    ini_y: number,
+    calculated_x: number,
+    calculated_y: number,
+    isFirstClick: boolean
+}
+
+class Server extends React.Component<{},ServerStates> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            ini_x: 0,
+            ini_y: 0,
+            calculated_x: 0,
+            calculated_y: 0,
+            isFirstClick: true
+        };
+    }
+
+    onMouseDown(ev: React.MouseEvent<HTMLDivElement>) {
+
+        if( this.state.isFirstClick ) {
+            this.setState({
+                ini_x: ev.screenX + this.state.calculated_x,
+                ini_y: ev.screenY + this.state.calculated_y,
+                isFirstClick: false
+            });
+        }
+
+    }
+
+    onMouseMove(ev: React.MouseEvent<HTMLDivElement>) {
+
+        if( this.state.isFirstClick == false ) {
+               this.setState({
+                calculated_x: ev.screenX - this.state.ini_x,
+                calculated_y: ev.screenY - this.state.ini_y
+            });         
+        }
+    }
+
+    onMouseUp() {
+        this.setState({
+            isFirstClick: true
+        });
+    }
+
     render() {
-        return <img src="server.png"></img>;
+        let x=this.state.calculated_x, y=this.state.calculated_y;
+        let style = {
+            transform: `translate(${x}px,${y}px)`
+        };
+        let highlight = (this.state.isFirstClick) ? '' : 'highlight';
+
+        return <img className={highlight} style={style} src="server.png" 
+                    draggable={false} onDragStart={()=>false}
+                    onMouseDown={this.onMouseDown.bind(this)}
+                    onMouseMove={this.onMouseMove.bind(this)}
+                    onMouseUp={this.onMouseUp.bind(this)}
+                    />;
     }
 }
 
@@ -44,7 +102,7 @@ class TrackMouse extends React.Component<{},TrackMouseStates> {
     render() {
         let x = this.state.x;
         let y = this.state.y;
-        
+
         return <div onMouseOver={this.onMouseOver.bind(this)}>
                 <span>X:</span><span>{x}</span><span>, Y:</span><span>{y}</span>
             </div>;

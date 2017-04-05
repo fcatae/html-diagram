@@ -21,11 +21,46 @@ var App = (function (_super) {
 }(React.Component));
 var Server = (function (_super) {
     __extends(Server, _super);
-    function Server() {
-        return _super !== null && _super.apply(this, arguments) || this;
+    function Server(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            ini_x: 0,
+            ini_y: 0,
+            calculated_x: 0,
+            calculated_y: 0,
+            isFirstClick: true
+        };
+        return _this;
     }
+    Server.prototype.onMouseDown = function (ev) {
+        if (this.state.isFirstClick) {
+            this.setState({
+                ini_x: ev.screenX + this.state.calculated_x,
+                ini_y: ev.screenY + this.state.calculated_y,
+                isFirstClick: false
+            });
+        }
+    };
+    Server.prototype.onMouseMove = function (ev) {
+        if (this.state.isFirstClick == false) {
+            this.setState({
+                calculated_x: ev.screenX - this.state.ini_x,
+                calculated_y: ev.screenY - this.state.ini_y
+            });
+        }
+    };
+    Server.prototype.onMouseUp = function () {
+        this.setState({
+            isFirstClick: true
+        });
+    };
     Server.prototype.render = function () {
-        return React.createElement("img", { src: "server.png" });
+        var x = this.state.calculated_x, y = this.state.calculated_y;
+        var style = {
+            transform: "translate(" + x + "px," + y + "px)"
+        };
+        var highlight = (this.state.isFirstClick) ? '' : 'highlight';
+        return React.createElement("img", { className: highlight, style: style, src: "server.png", draggable: false, onDragStart: function () { return false; }, onMouseDown: this.onMouseDown.bind(this), onMouseMove: this.onMouseMove.bind(this), onMouseUp: this.onMouseUp.bind(this) });
     };
     return Server;
 }(React.Component));
