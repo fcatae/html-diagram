@@ -14,7 +14,8 @@ var App = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     App.prototype.render = function () {
-        return React.createElement("div", null, "Start");
+        return React.createElement("svg", { height: "210", width: "500" },
+            React.createElement(Line, null));
     };
     return App;
 }(React.Component));
@@ -27,6 +28,16 @@ var Server = (function (_super) {
         return React.createElement("img", { src: "server.png" });
     };
     return Server;
+}(React.Component));
+var Line = (function (_super) {
+    __extends(Line, _super);
+    function Line() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Line.prototype.render = function () {
+        return React.createElement("line", { x1: "0", y1: "0", x2: "200", y2: "200", style: { stroke: 'rgb(255,0,0)', strokeWidth: 2 } });
+    };
+    return Line;
 }(React.Component));
 ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
 ReactDOM.render(React.createElement(Server, null), document.getElementById('srv'));
