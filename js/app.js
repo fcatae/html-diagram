@@ -39,6 +39,34 @@ var Line = (function (_super) {
     };
     return Line;
 }(React.Component));
+var TrackMouse = (function (_super) {
+    __extends(TrackMouse, _super);
+    function TrackMouse(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            x: -1,
+            y: -1
+        };
+        return _this;
+    }
+    TrackMouse.prototype.onMouseOver = function (ev) {
+        this.setState({
+            x: ev.clientX,
+            y: ev.clientY
+        });
+    };
+    TrackMouse.prototype.render = function () {
+        var x = this.state.x;
+        var y = this.state.y;
+        return React.createElement("div", { onMouseOver: this.onMouseOver.bind(this) },
+            React.createElement("span", null, "X:"),
+            React.createElement("span", null, x),
+            React.createElement("span", null, ", Y:"),
+            React.createElement("span", null, y));
+    };
+    return TrackMouse;
+}(React.Component));
 ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
 ReactDOM.render(React.createElement(Server, null), document.getElementById('srv'));
+ReactDOM.render(React.createElement(TrackMouse, null), document.getElementById('status'));
 //# sourceMappingURL=app.js.map
