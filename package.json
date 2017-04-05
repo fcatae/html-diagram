@@ -4,13 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lib": "gulp lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "gulp": "^3.9.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "typescript": "^2.2.2"
+  },
+  "dependencies": {
+    "@types/react": "^15.0.21",
+    "@types/react-dom": "^0.14.23"
   }
 }
