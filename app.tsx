@@ -31,8 +31,8 @@ class Server extends React.Component<{},ServerStates> {
 
         if( this.state.isFirstClick ) {
             this.setState({
-                ini_x: ev.screenX + this.state.calculated_x,
-                ini_y: ev.screenY + this.state.calculated_y,
+                ini_x: ev.screenX - this.state.calculated_x,
+                ini_y: ev.screenY - this.state.calculated_y,
                 isFirstClick: false
             });
         }

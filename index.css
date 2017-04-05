@@ -5,3 +5,8 @@
 .highlight {
     background-color: green;
 }
+
+svg {
+    position: absolute;
+    border: 2px dashed darkblue;
+}

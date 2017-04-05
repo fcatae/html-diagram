@@ -35,8 +35,8 @@ var Server = (function (_super) {
     Server.prototype.onMouseDown = function (ev) {
         if (this.state.isFirstClick) {
             this.setState({
-                ini_x: ev.screenX + this.state.calculated_x,
-                ini_y: ev.screenY + this.state.calculated_y,
+                ini_x: ev.screenX - this.state.calculated_x,
+                ini_y: ev.screenY - this.state.calculated_y,
                 isFirstClick: false
             });
         }
