@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>App</title>
+    <link rel="stylesheet" href="app.css">
+  </head>
+  <body>
+    <script src="lib/react.js"></script>
+    <script src="lib/react-dom.js"></script>
+
+    <div id="app"></div>
+    <hr>
+    <div id="arm"></div>
+    <script src="bin/app.js"></script>
+
+    <script>
+    
+      ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
+      ReactDOM.render(React.createElement(Server, null), document.getElementById('arm'));
+
+    </script>
+  </body>
+</html>
